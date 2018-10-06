@@ -1,0 +1,37 @@
+(defun REFRESH ()
+  (load "hw1.lisp" )
+  (load "testhw1.lisp" )
+)
+
+(defun EXPECT ( expression output )
+  (cond ( (equal expression output ) T )
+	( T (print "FAILURE" ) )
+  )
+)
+
+(defun TEST-TREE-CONTAINS ()
+   (EXPECT (TREE-CONTAINS 3 '((1 2 3) 7 8)) T ) 
+   (EXPECT (TREE-CONTAINS 4 '((1 2 3) 7 8)) NIL )
+   (EXPECT (TREE-CONTAINS 3 '(1 4 2)) NIL )
+  )
+
+(defun TEST-TREE-MIN ()
+  (EXPECT (TREE-MIN '( ( 1 2 3 ) 7 8 ) ) 1 )
+)
+
+(defun TEST-TREE-ORDER ()
+  (EXPECT (TREE-ORDER 3 ) 3 )
+  (EXPECT (TREE-ORDER '( ( 1 2 3 ) 7 8 ) ) '( 7 2 1 3 8 ) )
+)
+
+(defun TEST-SUB-LIST ()
+  (EXPECT (SUB-LIST '( a b c d ) 0 3 ) '( a b c ) )
+  (EXPECT (SUB-LIST '( a b c d ) 3 1 ) '(d) )
+  (EXPECT (SUB-LIST '( a b c d ) 2 0 ) NIL )
+)
+
+(defun TEST-SPLIT-LIST ()
+  (EXPECT (SPLIT-LIST '( a b c d ) ) '( ( a b ) ( c d ) ) )
+  (EXPECT (SPLIT-LIST '( a b c d e ) ) '( ( a b c ) ( d e ) ) ) 
+  (EXPECT (SPLIT-LIST '( a b c d e f ) ) '( ( a b c ) ( d e f ) ) )
+)
