@@ -1,6 +1,7 @@
+; Change these to point to your files!
 (defun REFRESH ()
-  (load "hw1.lisp" )
-  (load "testhw1.lisp" )
+  (load "../src/hw1.lisp" )
+  (load "./hw1.lisp" )
 )
 
 (defun EXPECT ( expression output )
@@ -34,4 +35,12 @@
   (EXPECT (SPLIT-LIST '( a b c d ) ) '( ( a b ) ( c d ) ) )
   (EXPECT (SPLIT-LIST '( a b c d e ) ) '( ( a b c ) ( d e ) ) ) 
   (EXPECT (SPLIT-LIST '( a b c d e f ) ) '( ( a b c ) ( d e f ) ) )
+)
+
+(defun TEST-HW1 ()
+  (TEST-TREE-CONTAINS )
+  (TEST-TREE-MIN)
+  (TEST-TREE-ORDER )
+  (TEST-SUB-LIST )
+  (TEST-SPLIT-LIST )
 )
