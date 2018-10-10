@@ -1,12 +1,4 @@
-; Change these to point to your files!
-(defun REFRESH ()
-  (load "../src/hw1.lisp" )
-  (load "./hw1.lisp" )
-)
-
-(defun EXPECT ( expression output )
-  (if (equal expression output ) T (print "FAILURE" ) )
-)
+(load "common.lsp" )
 
 (defun TEST-TREE-CONTAINS ()
    (EXPECT (TREE-CONTAINS 3 '((1 2 3) 7 8)) T ) 
