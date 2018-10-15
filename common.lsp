@@ -6,5 +6,11 @@
 )
 
 (defun EXPECT ( expression output )
-  (if (equal expression output ) T (print "FAILURE" ) )
-)
+  (if (equal expression output ) T (and
+				    (print "Failure, expected:" )
+				    (print output )
+				    (print "Got:" )
+				    (print expression )
+				    )
+      )
+   )
