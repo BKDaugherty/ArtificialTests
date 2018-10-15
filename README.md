@@ -1,2 +1,2 @@
 # ArtificialTests
-Test cases for AI HW
+Some test cases for my AI HW
