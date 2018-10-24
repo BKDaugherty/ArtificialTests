@@ -45,7 +45,15 @@
   (EXPECT (on-path '( 3 0 T ) '( ( 2 0 T ) ) ) NIL ) 
   (EXPECT (on-path '( 3 0 T ) '( ) ) NIL )
 )
-(defun TEST-MULT-DFS () )
+(defun TEST-MULT-DFS ()
+  )
 (defun TEST-MC-DFS ()  )
 
 
+(defun TEST-HW2 ()
+  (TEST-DFS )
+  (TEST-DFID )
+  (TEST-FINAL-STATE )
+  (TEST-NEXT-STATE )
+  (TEST-SUCC-FN )
+   )
