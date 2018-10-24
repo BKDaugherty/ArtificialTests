@@ -1,0 +1,33 @@
+(load "common.lsp" )
+(defun refresh4 ()
+  (load "../src/hw4/parse_cnf.lsp" )
+  (load "../src/hw4/hw4.lsp" )
+  (load "./hw4.lsp" )
+   )
+
+(defun TEST-IS-MEMBER-OF ()
+  (EXPECT (IsMemberOf 4 '(1 2 3 4 ) ) T )
+  (EXPECT (IsMemberOf 5 '(1 2 3 4 ) ) NIL )
+  (EXPECT (IsMemberOf 1 '( 1 ) ) T )
+  (EXPECT (IsMemberOf 1 '( ) ) NIL )
+  )
+
+
+(defun TEST-IS-SUBSET ()
+  (EXPECT (IsSubset '(1 2 3) '(1 2 3 4) ) T )
+  (EXPECT (IsSubset '(1 2 3 5) '(1 2 3 4) ) NIL )
+  (EXPECT (IsSubset '() '(1 2 3 4) ) T )
+  (EXPECT (IsSubset '(-1 2 3 ) '(-1 2 3) ) T )
+  )
+
+(defun TEST-ACCEPT ()
+  (EXPECT (accept '(1 2 3 ) '( (1 2 -3) ( -4 ) ( 2 ) ) ) T )
+  (EXPECT (accept '(1 2 3 ) '( (1 2 -3) ( -4 ) ( -1 2 3 ) ) ) NIL )
+  (EXPECT (accept '( ) '( (1 2 -3) ( -4 ) ( 2 ) ) ) NIL )
+  (EXPECT (accept '(1 2 3 ) '(()) ) T )
+  )
+
+(defun TEST-SAT? ()
+  (EXPECT (sat? 3 '((1 -2 3) (-1) (-2 -3))) '(-1 -2 3) )
+  (EXPECT (sat? 1 '((1) (-1))) NIL )
+  )
