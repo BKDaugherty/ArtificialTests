@@ -1,1 +1,1 @@
-clisp hw3-timing.lsp | grep 'Test\|Nodes\|GC\|Space\| time\|^$'
+clisp hw3-timing.lsp | grep 'TEST\|Nodes\|GC\|Space\| time\|^$'
