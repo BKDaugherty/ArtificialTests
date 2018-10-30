@@ -12,6 +12,27 @@
   (EXPECT (IsMemberOf 1 '( ) ) NIL )
   )
 
+(defun TEST-NEGATE-VAR ()
+  (EXPECT (negate-var 5 ) -5 )
+  (EXPECT (negate-var -5 ) 5 )
+  )
+
+(defun TEST-CREATE-VAR-LIST ()
+  (EXPECT (create-var-list 7 ) '( 7 6 5 4 3 2 1 ) )
+  (EXPECT (create-var-list 0 ) NIL )
+  (EXPECT (create-var-list 2 ) '( 2 1 ) )
+  )
+
+(defun TEST-GET-VAR-VALUE ()
+  (EXPECT (get-var-value 5 -1 ) -5 )
+  (EXPECT (get-var-value 4 1 ) 4 )
+  (EXPECT (get-var-value 3 1 ) 3 )
+  )
+
+(defun TEST-ASSIGN-VARIABLE ()
+  (EXPECT (assign-variable 2 -1 '() ) '( -2 ) )
+  )
+
 
 (defun TEST-IS-SUBSET ()
   (EXPECT (IsSubset '(1 2 3) '(1 2 3 4) ) T )
@@ -20,14 +41,87 @@
   (EXPECT (IsSubset '(-1 2 3 ) '(-1 2 3) ) T )
   )
 
+(defun TEST-SHARES-MEMBER ()
+  (EXPECT (shares-member '(1 2 3 ) '( 4 ) ) NIL )
+  (EXPECT (shares-member '(1 2 3 ) '( 4 1 ) ) T )
+  )
+
 (defun TEST-ACCEPT ()
-  (EXPECT (accept '(1 2 3 ) '( (1 2 -3) ( -4 ) ( 2 ) ) ) T )
+  (EXPECT (accept '(1 2 3 ) '( (1 2 -3) ( -4 ) ( 2 ) ) ) NIL )
   (EXPECT (accept '(1 2 3 ) '( (1 2 -3) ( -4 ) ( -1 2 3 ) ) ) NIL )
   (EXPECT (accept '( ) '( (1 2 -3) ( -4 ) ( 2 ) ) ) NIL )
-  (EXPECT (accept '(1 2 3 ) '(()) ) T )
+  (EXPECT (accept '(1 2 3 ) '((2) (3) (1) (4)) ) NIL )
+  (EXPECT (accept '(1 2 3 ) '((1)) ) T )
+  (EXPECT (accept '(1 2 3 ) '( (1 2 -3) ( -4 1 ) ( 2 ) ) ) T )
+  )
+
+(defun TEST-REJECT-CLAUSE ()
+  (EXPECT (reject-clause '(1 2 3 ) '(-1 -2 -3 4 5 ) ) T )
+  (EXPECT (reject-clause '(1 2 3 ) '(-1 -3 4 5 -2 ) ) T )
+  (EXPECT (reject-clause '(1) '(-1 -3 4 5 -2 ) ) T ) 
+  (EXPECT (reject-clause '(-1) '(1) ) T )
+  (EXPECT (reject-clause '(-1 2) '(1) ) NIL )
+  (EXPECT (reject-clause '() '(1) ) NIL )
+  )
+
+(defun TEST-REJECT ()
+  (EXPECT (reject '(1 2 3 4 ) '( ( -1 -2 ) (-3 -4 ) ) ) T )
+  )
+
+(defun TEST-REMOVE-FROM-LIST ()
+  (EXPECT (remove-from-list 1 '( 2 3 4 ) ) '(2 3 4) )
+  (EXPECT (remove-from-list 3 '( 2 3 4 ) ) '(2 4) )
+  (EXPECT (remove-from-list 3 '( 3 ) ) '() )
+  )
+
+(defun TEST-BACKTRACK ()
+  (EXPECT (backtrack '( ( 1 2 ) ( 3 4 ) ) '() '( 1 2 3 4 ) ) '(3 2 1 ) )
+  (EXPECT (backtrack '( ( 1 ) ) '() '( 1 ) ) '( 1 ) )
   )
 
 (defun TEST-SAT? ()
   (EXPECT (sat? 3 '((1 -2 3) (-1) (-2 -3))) '(-1 -2 3) )
   (EXPECT (sat? 1 '((1) (-1))) NIL )
+  (EXPECT (sat? 3 '( ( 1 2 3 ) ( -2 3 ) ( -1 ) ) ) '( -1 2 3 ) )
   )
+
+(defun TEST-COUNT-CONSTRAINTS-CLAUSE ()
+  (EXPECT (count-constraints-clause '( 1 2 3 ) 3 ) 1)
+  (EXPECT (count-constraints-clause '( 2 -4 -4 ) -4 ) 2 )
+  )
+
+(defun TEST-COUNT-CONSTRAINTS ()
+  (EXPECT (count-constraints '( ( 1 2 ) ( 2 3 ) ) 2 ) 2 )
+  )
+
+(defun TEST-CREATE-COUNT-LIST ()
+  (EXPECT (create-count-list '( (1 2 ) (3 4 ) ) '( 1 2 3 4 ) )
+	  '( (1 1 ) ( 2 1 ) (3 1 ) (4 1 ) ) )
+  )
+
+(defun TEST-REMOVE-FROM-COUNT-LIST ()
+  (EXPECT (remove-from-count-list 2 '( (1 7 ) (2 9 ) ) ) '( ( 1 7 ) ) )
+  )
+
+(defun TEST-SORT-COUNT-LIST ()
+  (EXPECT (sort-list '( ( 1 8 ) (2 9 ) (3 5 ) ) ) '( 2 1 3 ) )
+  )
+
+(defun TEST-GET-MAX-FROM-COUNT-LIST ()
+  (EXPECT (get-max-from-count-list '( ( 1 7 ) ( 2 8 ) ) ) '(2 8 ) )
+  )
+
+(defun TEST-SPEED ()
+  (let* ( (f1 (parse-cnf "../src/hw4/f1/sat_f1.cnf" ) )
+	  (f2 (parse-cnf "../src/hw4/f2/sat_f2.cnf" ) )
+	  (f3 (parse-cnf "../src/hw4/f3/sat_f3.cnf" ) )
+	  (f4 (parse-cnf "../src/hw4/f4/sat_f4.cnf" ) )
+	  (f5 (parse-cnf "../src/hw4/f5/sat_f5.cnf" ) )
+	  )
+    (sat? (first f1 ) (second f1 ) )
+    (sat? (first f2 ) (second f2 ) )
+    (sat? (first f3 ) (second f3 ) )
+    (sat? (first f4 ) (second f4 ) )
+    (sat? (first f5 ) (second f5 ) ) )
+  )
+    
